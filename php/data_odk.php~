@@ -1,0 +1,33 @@
+<?php
+  $host="localhost";
+$username="root";
+$password="Grech@mp17";
+$dbname="testdb";
+$server = mysql_connect($host, $username, $password);
+//$con=mysqli_connect($host,$username,$password,$dbname);
+  /*  $username = "homedbuser";
+    $password = "homedbuser";
+    $host = "localhost";
+    $database="homedb";
+
+    $server = mysql_connect($host, $username, $password);*/
+    $connection = mysql_select_db($dbname, $server);
+
+    $myquery = "SELECT  `player`, `att`, `def`, `mid`, `club`, `country`, `color`, `age` FROM  `foot`";
+    $query = mysql_query($myquery);
+
+    if ( ! $query ) {
+        echo mysql_error();
+        die;
+    }
+
+    $data = array();
+
+    for ($x = 0; $x < mysql_num_rows($query); $x++) {
+        $data[] = mysql_fetch_assoc($query);
+    }
+
+    echo json_encode($data);
+
+    mysqli_close($con);
+?>
