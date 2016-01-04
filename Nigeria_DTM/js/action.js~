@@ -1,0 +1,43 @@
+//alert("Hello World!");
+
+// selon le type de données faire un graphe différent? apres
+// prends les données et fait un graphe
+
+
+var action = function(data)
+{
+	//prend la 1e colonne et fait un graphe bar
+
+
+  var circleRadii = [];
+  data.forEach(function (d,i){console.log(data[i][1]);
+	
+	});
+ 
+for(var i = 0, len = data.length; i < len; ++i)
+   	{circleRadii[i] = data[i][1];}
+	console.log(circleRadii);
+ var svgContainer = d3.select("body").append("svg")
+                                     .attr("width", 600)
+                                     .attr("height", 100);
+ 
+ var circles = svgContainer.selectAll("circle")
+                           .data(circleRadii)
+                           .enter()
+                          .append("circle")
+
+ var circleAttributes = circles
+                       .attr("cx", 50)
+                       .attr("cy", 50)
+                       .attr("r", function (d) { return d; })
+                       .style("fill", function(d) {
+                         var returnColor;
+                         if (d === 7) { returnColor = "green";
+                         } else if (d === 20) { returnColor = "purple";
+                         } else if (d === 10) { returnColor = "red"; }
+                         return returnColor;
+                       });
+}
+
+
+

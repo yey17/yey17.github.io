@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+body {
+  width: 960px;
+  height: 500px;
+}
+rect {
+  opacity: .1;
+}
+</style>
+
+<body>
+<script src="js/d3.min.js" type="text/javascript" ></script>
+<script src="https://raw.github.com/mbostock/d3/master/lib/colorbrewer/colorbrewer.js"></script>
+<script>
+var width = 960;
+var height = 500;
+var svg = d3.select('body').append('svg')
+  .attr('width', width)
+  .attr('height', height);
+var sectionNum = 5;
+var data = [];
+for (var i = 0; i < 200; i++) {
+  data.push({ x: Math.random(), y: Math.random(), value: Math.random() });
+}
+var x = d3.scale.linear()
+  .domain([0, 1])
+  .range([0, width]);
+var y = d3.scale.linear()
+  .domain([0, 1])
+  .range([0, height]);
+var r = d3.scale.pow()
+  .exponent(4)
+  .domain([0, 1])
+  .range([1, 25]);
+var section = d3.scale.quantize()
+  .domain([0, 1])
+  .range(d3.range(sectionNum));
+var color = d3.scale.ordinal()
+  .domain(d3.range(sectionNum))
+  .range(['Blues', 'Greens', 'Oranges', 'Reds', 'Purples']);
+var background = svg.append('g').attr('class', 'background');
+var circles = svg.append('g').attr('class', 'circles');
+d3.nest().key(function(d) { return section(d.x); })
+  .entries(data).forEach(function(sectionEntry) {
+  circles.append('g').selectAll('circle')
+    .data(sectionEntry.values).enter()
+      .append('circle')
+      .attr('cx', function(d) { return x(d.x); })
+      .attr('cy', function(d) { return y(d.y); })
+      .attr('r', function(d) { return r(d.value); })
+      .style('fill', function() { return colorbrewer[color(sectionEntry.key)][9][5]; });
+  var xExtent = section.invertExtent(+sectionEntry.key);
+  background.append('rect')
+    .attr('x', x(xExtent[0]))
+    .attr('y', 0)
+    .attr('width', x(xExtent[1] - xExtent[0]))
+    .attr('height', height)
+    .style('fill', function() { return colorbrewer[color(sectionEntry.key)][9][5]; });
+});
+</script>
+</body>

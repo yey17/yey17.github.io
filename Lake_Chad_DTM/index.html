@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+ <html>
+  <head>
+     <title>DTM Nigeria Cameroon Draft</title>
+     <meta http-equiv="content-type" content="text/html; charset=UTF8">
+
+     <link href="css/dc.css" rel="stylesheet" type="text/css" />
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link href="css/site.css" rel="stylesheet" type="text/css" />
+     <script src="js/action.js" type="text/javascript" ></script>
+     <script src="js/d3.min.js" type="text/javascript" ></script>
+     <script src="js/crossfilter.js" type="text/javascript" ></script>
+     <script src="js/dc.min.js" type="text/javascript" ></script>
+     <script src="js/jquery.js" type="text/javascript" ></script>
+     <script src="data/cmr_lake.js" type="text/javascript" ></script>
+     <script src="data/label_cntry.js" type="text/javascript" ></script>
+     <script src="data/combined_adm2.js" type="text/javascript" ></script>
+     <script src="data/nga_adm1.js" type="text/javascript" ></script>
+     <script src="data/label_adm1.js" type="text/javascript" ></script>
+     <script src="data/nga_neighboors.js" type="text/javascript" ></script>
+
+     <!--<script src="data/custom.geo.json"  ></script>-->
+     <script type="text/javascript">
+	d3.csv("data/DTM_CMR_NGA.csv", function(data) {
+
+    			console.log(data);
+			var dataset
+			var propriete=Object.keys(data[0]);
+			dataset = data.map(function(d) { //console.log(d);
+			//Store all data in a simple array, tranforming string in number when relevant
+            var toda_prop={};
+			for(var i = 0, len = propriete.length; i < len; ++i)
+   				{
+					if (isNaN(d[propriete[i]]) == false)
+					{
+                        if(!d[propriete[i]])
+                           {
+                               toda_prop[propriete[i]]="other"
+                           }
+                           else{toda_prop[propriete[i]] = +d[propriete[i]];}
+					}
+					else{toda_prop[propriete[i]] = d[propriete[i]];}
+				}
+			return toda_prop; })
+			console.log(dataset);
+
+			action(dataset);
+			});
+
+
+     </script>
+   </head>
+   <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1">
+                       <img  src="http://nopbhaysolucion.tk/odk_cam/image/IOM_OIM_Blue.png">
+                </div>
+                <div class="col-md-11">
+                        <h1 id="maptitle">DTM Nigeria Cameroon Dashboard Draft</h1>
+                        <p>IOM - 2015, 31th December. Click any chart or on the map to filter the data set.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                        <a class="reset btn btn-primary btn-sm" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
+                </div>
+                <div id="dc-data-count" >
+                </div>
+               <!--<button id="cmd">generate PDF</button>-->
+            </div>
+            <div class="col-md-5">
+                    <h4 class="ti"> Current LGA</h4>
+                     <div id="map"></div>
+                    <div id="legend">#Displaced People</div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="ti2">Location Type</h4>
+                        <div id="loc_type"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="ti">Current Ward Top 10</h4>
+                        <div id="ward"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="ti2">Reason</h4>
+                        <div id="reason"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="ti">Provenance LGA Top 10</h4>
+                        <div id="Departure_adm2"></div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="ti2">Time</h4>
+                        <div id="time"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 class="ti">Current State</h4>
+                        <div id="Arrival_adm1"></div>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h4 class="ti">Provenance State</h4>
+                        <div id="Departure_adm1"></div>
+                    </div>
+
+                </div>
+            </div>
+       </div>
+       <div id="tableau">
+       </div>
+        <div id="bas">
+            <p> IOM, support from iMMAP </p>
+       </div>
+   </body>
+
+ </html>
+
+
+
+

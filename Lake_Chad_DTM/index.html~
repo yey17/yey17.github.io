@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+ <html>
+  <head>
+     <title>Hello World</title>
+     <link href="css/site.css" rel="stylesheet" type="text/css" />
+     <script src="js/action.js" type="text/javascript" ></script>
+     <script src="js/d3.min.js" type="text/javascript" ></script>
+   
+     <!--<script src="data/data.js" type="text/javascript" ></script>-->
+     <script type="text/javascript">
+	d3.csv("food.csv", function(data) {
+    			console.log(data);
+			var dataset
+			//for (elt in data) {console.log(data[elt]);    } 
+			var propriete=Object.keys(data[0])
+			console.log(propriete)
+			//transforme en array de array
+			dataset = data.map(function(d) { console.log(d); 
+			//Store all data in a simple array, tranforming string in number when relevant
+			var toda_prop=[]
+			for(var i = 0, len = propriete.length; i < len; ++i)
+   				{
+					if (isNaN(d[propriete[i]]) == false)
+					{
+						toda_prop[i] = +d[propriete[i]];
+					}
+					else{toda_prop[i] = d[propriete[i]];}
+				}
+	
+			console.log( toda_prop); 	
+			//return [ d[propriete[0]], +d[propriete[1]] ]; })
+			return toda_prop; })
+			console.log(dataset);
+			action(dataset);
+			});
+	
+		/*d3.csv("food.csv", function(data) {
+    			console.log(data);
+			var dataset
+			//for (elt in data) {console.log(data[elt]);    } 
+			var propriete=Object.keys(data[0])
+			console.log(propriete)
+			//transforme en array de array
+			dataset = data.map(function(d) { console.log(d); 
+			var toda_prop
+			console.log([ d[propriete[0]], +d[propriete[1]] ]); 	
+			console.log( d[propriete]); 	
+			return [ d[propriete[0]], +d[propriete[1]] ]; })
+			
+			console.log(dataset);
+			action(dataset);
+			});*/
+		
+			//return dataset	
+			/*sauve.forEach( function (d){
+				data[d]=0;
+			});*/
+		//});
+     </script>
+   </head>
+   <body>
+     <!--<p>Hello World!</p>
+     <svg width="50" height="50">
+2      <circle cx="25" cy="25" r="25" fill="purple" />
+3    </svg>-->
+   </body>
+ </html>
+
+
+
+
+
+
+
+
+
